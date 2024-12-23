@@ -1,0 +1,206 @@
+{
+    /* (c) Tomáš Mark 2024 */
+    "version": "2.0.0",
+    "tasks": [
+        { /* clear terminal */
+            "label": "clear terminal",
+            "type": "shell",
+            "command": "clear",
+            "group": "none",
+            "problemMatcher": []
+        },
+        {
+            /* CMAKE TASKS */
+            "label": "MarkWare Tasks",
+            "type": "shell",
+            "command": "${workspaceFolder}/CMakeController.sh",
+            "args": [
+                "${input:taskName}",
+                "${input:buildArch}",
+                "${input:buildType}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "MarkWare Tasks",
+            "problemMatcher": [],
+            "dependsOn": [
+                "clear terminal"
+            ]
+        },
+        {
+            /* Build Native Debug */
+            "label": "Build Native Debug",
+            "type": "shell",
+            "command": "${workspaceFolder}/CMakeController.sh",
+            "args": [
+                "Build 🔨",
+                "Native",
+                "Debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "Build Native Debug",
+            "problemMatcher": [],
+            "dependsOn": [
+                "clear terminal"
+            ]
+        },
+        {
+            /* LINT */
+            "label": "lint",
+            "type": "shell",
+            "command": "find",
+            "args": [
+                "${workspaceFolder}",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/Build/*\"",
+                "\\(",
+                "-name",
+                "\"*.c\"",
+                "-o",
+                "-name",
+                "\"*.cpp\"",
+                "-o",
+                "-name",
+                "\"*.h\"",
+                "-o",
+                "-name",
+                "\"*.hpp\"",
+                "\\)",
+                "-exec",
+                "clang-tidy",
+                "{}",
+                "+"
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Generated task for linting C++ files with clang-tidy.",
+        },
+        {
+            /* CLANG FORMAT */
+            "label": "clang-format",
+            "type": "shell",
+            "command": "find",
+            "args": [
+                "${workspaceFolder}",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/Build/*\"",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/CMakeFiles/*\"",
+                "\\(",
+                "-name",
+                "\"*.c\"",
+                "-o",
+                "-name",
+                "\"*.cpp\"",
+                "-o",
+                "-name",
+                "\"*.h\"",
+                "-o",
+                "-name",
+                "\"*.hpp\"",
+                "\\)",
+                "-exec",
+                "clang-format",
+                "-i",
+                "{}",
+                "+"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Generated task for formatting C++ files with clang-format.",
+        },
+        {
+            /* CMAKE FORMAT */
+            "label": "cmake-format",
+            "type": "shell",
+            "command": "find",
+            "args": [
+                "${workspaceFolder}",
+                "-not",
+                "-path",
+                "\"${workspaceFolder}/Build/*\"",
+                "\\(",
+                "-name",
+                "\"CMakeLists.txt\"",
+                "-o",
+                "-name",
+                "\"*.cmake\"",
+                "\\)",
+                "-exec",
+                "cmake-format",
+                "-i",
+                "{}",
+                "+"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Generated task for formatting CMake files with cmake-format.",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "taskName",
+            "type": "pickString",
+            "description": "Select MarkWare Task",
+            "options": [
+                "Build 🔨",
+                "Rebuild 🧹⚔️⚙️🔨",
+                " ",
+                "Configure ⚙️",
+                "Conan ⚔️",
+                "Clean 🧹",
+                "Install 📌",
+                "Licenses 📜",
+                " ",
+                "Build Standalone",
+                "Rebuild Standalone",
+                "Configure Standalone",
+                "Conan Standalone",
+                "Clean Standalone",
+                "Install Standalone",
+                "Licenses Standalone",
+                " ",
+                "Build Library",
+                "Rebuild Library",
+                "Configure Library",
+                "Conan Library",
+                "Clean Library",
+                "Install Library",
+                "Licenses Library",
+            ],
+            "default": "Build 🔨"
+        },
+        {
+            "id": "buildArch",
+            "type": "pickString",
+            "description": "Select target architecture",
+            "options": [
+                "Native",
+                "Aarch64"
+            ],
+            "default": "Native"
+        },
+        {
+            "id": "buildType",
+            "type": "pickString",
+            "description": "Select type of build",
+            "options": [
+                "Debug",
+                "Release",
+                "RelWithDebInfo",
+                "MinSizeRel"
+            ],
+            "default": "Debug"
+        }
+    ]
+}

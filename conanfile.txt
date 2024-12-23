@@ -1,0 +1,4 @@
+# Conan file starting template
+[generators]
+CMakeDeps
+CMakeToolchain

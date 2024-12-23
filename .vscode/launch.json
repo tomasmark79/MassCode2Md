@@ -1,0 +1,27 @@
+{
+    /* (c) Tomáš Mark 2024 */
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug CMake Target",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Build/Standalone/Native/Debug/MassCode2MdStandalone", /* 🪲 */
+            /* "program": "${workspaceFolder}/Build/Standalone/Native/RelWithDebInfo/MassCode2MdStandalone", */ /* 🪲 */
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
