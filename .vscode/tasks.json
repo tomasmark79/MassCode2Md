@@ -1,196 +1,72 @@
 {
     /* (c) Tomáš Mark 2024 */
     "version": "2.0.0",
-    "tasks": [
-        { /* clear terminal */
-            "label": "clear terminal",
-            "type": "shell",
-            "command": "clear",
-            "group": "none",
-            "problemMatcher": []
-        },
-        {
-            /* CMAKE TASKS */
-            "label": "MarkWare Tasks",
-            "type": "shell",
-            "command": "${workspaceFolder}/CMakeController.sh",
-            "args": [
-                "${input:taskName}",
-                "${input:buildArch}",
-                "${input:buildType}"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "detail": "MarkWare Tasks",
-            "problemMatcher": [],
-            "dependsOn": [
-                "clear terminal"
-            ]
-        },
-        {
-            /* Build Native Debug */
-            "label": "Build Native Debug",
-            "type": "shell",
-            "command": "${workspaceFolder}/CMakeController.sh",
-            "args": [
-                "Build 🔨",
-                "Native",
-                "Debug"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "detail": "Build Native Debug",
-            "problemMatcher": [],
-            "dependsOn": [
-                "clear terminal"
-            ]
-        },
-        {
-            /* LINT */
-            "label": "lint",
-            "type": "shell",
-            "command": "find",
-            "args": [
-                "${workspaceFolder}",
-                "-not",
-                "-path",
-                "\"${workspaceFolder}/Build/*\"",
-                "\\(",
-                "-name",
-                "\"*.c\"",
-                "-o",
-                "-name",
-                "\"*.cpp\"",
-                "-o",
-                "-name",
-                "\"*.h\"",
-                "-o",
-                "-name",
-                "\"*.hpp\"",
-                "\\)",
-                "-exec",
-                "clang-tidy",
-                "{}",
-                "+"
-            ],
-            "group": "build",
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "detail": "Generated task for linting C++ files with clang-tidy.",
-        },
-        {
-            /* CLANG FORMAT */
-            "label": "clang-format",
-            "type": "shell",
-            "command": "find",
-            "args": [
-                "${workspaceFolder}",
-                "-not",
-                "-path",
-                "\"${workspaceFolder}/Build/*\"",
-                "-not",
-                "-path",
-                "\"${workspaceFolder}/CMakeFiles/*\"",
-                "\\(",
-                "-name",
-                "\"*.c\"",
-                "-o",
-                "-name",
-                "\"*.cpp\"",
-                "-o",
-                "-name",
-                "\"*.h\"",
-                "-o",
-                "-name",
-                "\"*.hpp\"",
-                "\\)",
-                "-exec",
-                "clang-format",
-                "-i",
-                "{}",
-                "+"
-            ],
-            "group": "build",
-            "problemMatcher": [],
-            "detail": "Generated task for formatting C++ files with clang-format.",
-        },
-        {
-            /* CMAKE FORMAT */
-            "label": "cmake-format",
-            "type": "shell",
-            "command": "find",
-            "args": [
-                "${workspaceFolder}",
-                "-not",
-                "-path",
-                "\"${workspaceFolder}/Build/*\"",
-                "\\(",
-                "-name",
-                "\"CMakeLists.txt\"",
-                "-o",
-                "-name",
-                "\"*.cmake\"",
-                "\\)",
-                "-exec",
-                "cmake-format",
-                "-i",
-                "{}",
-                "+"
-            ],
-            "group": "build",
-            "problemMatcher": [],
-            "detail": "Generated task for formatting CMake files with cmake-format.",
-        }
-    ],
     "inputs": [
         {
+            /* SPECIAL MENU ITEMS */
+            "id": "specialTaskName",
+            "type": "pickString",
+            "description": "Select MarkWare Special Task",
+            "options": [
+                "Permutate All Tasks 🕧"
+            ],
+            "default": "Permutate All Tasks 🕧"
+        },
+        {
+            /* MENU ITEMS */
             "id": "taskName",
             "type": "pickString",
             "description": "Select MarkWare Task",
             "options": [
-                "Build 🔨",
-                "Rebuild 🧹⚔️⚙️🔨",
-                " ",
-                "Configure ⚙️",
-                "Conan ⚔️",
+                "Zero to Hero 🦸",
                 "Clean 🧹",
-                "Install 📌",
-                "Licenses 📜",
-                " ",
-                "Build Standalone",
-                "Rebuild Standalone",
-                "Configure Standalone",
-                "Conan Standalone",
-                "Clean Standalone",
-                "Install Standalone",
-                "Licenses Standalone",
-                " ",
-                "Build Library",
-                "Rebuild Library",
-                "Configure Library",
-                "Conan Library",
-                "Clean Library",
-                "Install Library",
-                "Licenses Library",
+                "Conan 🗡️",
+                "Configure 🔧",
+                "Build 🔨",
+                "Collect Licenses 📜",
+                "Install Artefacts 📌",
+                "Release Artefacts 📦",
+                "",
+                "📚 Zero to Hero 🦸",
+                "📚 Clean 🧹",
+                "📚 Conan 🗡️",
+                "📚 Configure 🔧",
+                "📚 Build 🔨",
+                "📚 Collect Licenses 📜",
+                "📚 Install Artefacts 📌",
+                "📚 Release Artefacts 📦",
+                "",
+                "🎯 Zero to Hero 🦸",
+                "🎯 Clean 🧹",
+                "🎯 Conan 🗡️",
+                "🎯 Configure 🔧",
+                "🎯 Build 🔨",
+                "🎯 Collect Licenses 📜",
+                "🎯 Install Artefacts 📌",
+                "🎯 Release Artefacts 📦",
+                "",
+                "⚔️ Conan graph.html",
+                "🔍 Lint C/C++ files",
+                "📐 Format C/C++ files (Clang)",
+                "📏 Format CMake files"
             ],
             "default": "Build 🔨"
         },
         {
+            /* ARCH ITEMS */
             "id": "buildArch",
             "type": "pickString",
             "description": "Select target architecture",
             "options": [
-                "Native",
-                "Aarch64"
+                "default", /* this is system default compiler */
+                "x86_64-unknown-linux-gnu",
+                "x86_64-w64-mingw32",
+                "aarch64-linux-gnu"
             ],
-            "default": "Native"
+            "default": "default"
         },
         {
+            /* BUILD TYPE ITEMS */
             "id": "buildType",
             "type": "pickString",
             "description": "Select type of build",
@@ -201,6 +77,128 @@
                 "MinSizeRel"
             ],
             "default": "Debug"
+        },
+    ],
+    "tasks": [
+        {
+            /* SPECIAL TASKS RUN */
+            "label": "MarkWare Special Tasks Menu",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/SolutionController.py",
+                "${input:specialTaskName}",
+                "independent_parameter"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "MarkWare Special Tasks Menu",
+            "problemMatcher": [],
+            "dependsOn": [
+                /* "clear terminal" */ /* uncomment if you want to clear terminal before each task */
+            ]
+        },
+        {
+             /* TASKS RUN */
+            "label": "MarkWare Tasks Menu",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/SolutionController.py",
+                "${input:taskName}",
+                "${input:buildArch}",
+                "${input:buildType}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "MarkWare Tasks Menu",
+            "problemMatcher": [],
+            "dependsOn": [
+                /* "clear terminal" */ /* uncomment if you want to clear terminal before each task */
+            ]
+        },
+        {
+            /* DIRECT BUILD (NO MENU) */
+            "label": "Direct Build",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/SolutionController.py",
+                "Build 🔨",
+                "default",
+                "Debug"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "Direct Build",
+            "problemMatcher": []
+        },
+        {
+            /* DIRECT LINT C/C++ ( SHORT MENU )  */
+            "label": "lintC",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/SolutionController.py",
+                "🔍 Lint C/C++ files",
+                "${input:buildArch}",
+                "${input:buildType}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "lintC",
+            "problemMatcher": []
+        },
+        {
+            /* DIRECT CLANG-FORMAT ( SHORT MENU ) */
+            "label": "clang-format",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/SolutionController.py",
+                "📐 Format C/C++ files (Clang)",
+                "${input:buildArch}",
+                "${input:buildType}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "clang-format",
+            "problemMatcher": []
+        },
+        {
+            /* DIRECT CMAKE-FORMAT ( SHORT MENU ) */
+            "label": "cmake-format",
+            "type": "shell",
+            "command": "python3",
+            "args": [
+                "${workspaceFolder}/SolutionController.py",
+                "📏 Format CMake files",
+                "${input:buildArch}",
+                "${input:buildType}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "cmake-format",
+            "problemMatcher": []
+        },
+        { /* clear terminal */
+            "label": "clear terminal",
+            "type": "shell",
+            "command": "clear",
+            "group": "none",
+            "problemMatcher": []
         }
     ]
 }

@@ -11,12 +11,9 @@
 #include <utility>
 #include <vector>
 
-// Library implementation
-
 MassCode2Md::MassCode2Md()
 {
-    std::cout << "--- MassCode2Md v." << MASSCODE2MD_VERSION
-              << " instantiated ---" << std::endl;
+    std::cout << "--- MassCode2Md v." << MASSCODE2MD_VERSION << " instantiated ---" << std::endl;
 }
 
 MassCode2Md::~MassCode2Md()
@@ -37,25 +34,19 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
     int totalWrittenFiles = 0;
 
     // Load file to buffer
-    
+
     if (!std::filesystem::exists(dbJsonPath))
     {
         std::cout << "Input file does not exist: " << dbJsonPath << std::endl;
         return 1;
     }
-    
+
     std::ifstream dbJsonFile(dbJsonPath); // Open file
     std::string   dbJsonContent(
         (std::istreambuf_iterator<char>(dbJsonFile)),
         std::istreambuf_iterator<char>()
     ); // Read file to string
 
-    
-    
-    
-    
-    
-    
     nlohmann::json dbJson;
     try
     {
@@ -77,15 +68,13 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
         folderData.push_back(std::make_pair(folderName, folderId));
 
         // Create the folder using the folderName
-        std::cout << "Folder Name: " << folderName
-                  << ", Folder ID: " << folderId << std::endl;
+        std::cout << "Folder Name: " << folderName << ", Folder ID: " << folderId << std::endl;
 
         // Replace invalid characters in label with a valid character
         std::replace_if(
             folderName.begin(),
             folderName.end(),
-            [](char c)
-            { return !std::isalnum(c) && c != '_' && c != '-' && c != '+'; },
+            [](char c) { return !std::isalnum(c) && c != '_' && c != '-' && c != '+'; },
             '_'
         );
 
@@ -102,8 +91,7 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
             std::cout << "Creating folder: " << folderPath << std::endl;
             if (!std::filesystem::create_directory(folderPath))
             {
-                std::cout << "Failed to create folder: " << folderPath
-                          << std::endl;
+                std::cout << "Failed to create folder: " << folderPath << std::endl;
                 return 1;
             }
             totalWrittenFolders++;
@@ -124,8 +112,7 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
         std::string name = snippet["name"];
 
         // Print the snippet data
-        std::cout << "Snippet: " << name << ", Folder ID: " << folderId
-                  << std::endl;
+        std::cout << "Snippet: " << name << ", Folder ID: " << folderId << std::endl;
 
         // Find the folderName for this folderId
         std::string folderName;
@@ -159,8 +146,8 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
 
             if (label.empty() || value.empty())
             {
-                std::cout << "Invalid content in snippet: "
-                          << snippet["name"].get<std::string>() << std::endl;
+                std::cout << "Invalid content in snippet: " << snippet["name"].get<std::string>()
+                          << std::endl;
                 continue;
             }
 
@@ -168,9 +155,7 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
             std::replace_if(
                 name.begin(),
                 name.end(),
-                [](char c) {
-                    return !std::isalnum(c) && c != '_' && c != '-' && c != '+';
-                },
+                [](char c) { return !std::isalnum(c) && c != '_' && c != '-' && c != '+'; },
                 '_'
             );
 
@@ -184,8 +169,8 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
             if (fragmentCount > 1)
             {
                 filePath = mdOutputPath + "/" + folderName + "/" + name + "_" +
-                    std::to_string(fragmentId + 1) + "_from_" +
-                    std::to_string(fragmentCount) + ".md";
+                    std::to_string(fragmentId + 1) + "_from_" + std::to_string(fragmentCount) +
+                    ".md";
                 fragmentId++;
             }
             else
@@ -205,8 +190,7 @@ int MassCode2Md::parser(std::string dbJsonPath, std::string mdOutputPath)
                 std::ofstream outFile(filePath); // Open file
                 if (!outFile)
                 {
-                    std::cout << "Failed to create file: " << filePath
-                              << std::endl;
+                    std::cout << "Failed to create file: " << filePath << std::endl;
                     continue;
                 }
                 totalWrittenFiles++;

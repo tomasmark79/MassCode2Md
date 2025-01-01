@@ -3,8 +3,6 @@
 
 #include <string>
 
-// Library declaration
-
 class MassCode2Md
 {
   public:

@@ -1,19 +1,22 @@
 [
-    /* This file is only template. */
-    /* Keybindings.json doesn't work within code project folder! */
-    /* You need to add these keybindings to your user settings. */
+    /* Keybindings.json doesn't work within code project folder!            */
+    /* You need to add those keybindings declaration to your user settings. */
     /* File -> Preferences -> Keyboard Shortcuts -> Open Keyboard Shortcuts */
-    /* or in `~/.config/Code/${user}/keybindings.json`
-    /* (c) Tomáš Mark 2024 */
+    /* or via filesystem in `~/.config/Code/${user}/keybindings.json`       */
     {
         "key": "f7",
         "command": "workbench.action.tasks.runTask",
-        "args": "Build Native Debug"
+        "args": "Direct Build"
     },
     {
         "key": "shift+f7",
         "command": "workbench.action.tasks.runTask",
-        "args": "MarkWare Tasks"
+        "args": "MarkWare Tasks Menu"
+    },
+    {
+        "key": "ctrl+alt+s",
+        "command": "workbench.action.tasks.runTask",
+        "args": "MarkWare Special Tasks Menu"
     },
     {
         "key": "ctrl+alt+c",
@@ -35,4 +38,9 @@
         "command": "workbench.action.tasks.runTask",
         "args": "lint"
     },
+    {
+        "key": "ctrl+alt+shift+b",
+        "command": "workbench.action.tasks.runTask",
+        "args": "shellcheck project bash scripts"
+    }
 ]
