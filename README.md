@@ -6,6 +6,7 @@ Version: **main**
 [![Ubuntu](https://github.com/tomasmark79/MassCode2Md/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/tomasmark79/MassCode2Md/actions/workflows/ubuntu.yml)
 [![MacOS](https://github.com/tomasmark79/MassCode2Md/actions/workflows/macos.yml/badge.svg)](https://github.com/tomasmark79/MassCode2Md/actions/workflows/macos.yml)
 [![Windows](https://github.com/tomasmark79/MassCode2Md/actions/workflows/windows.yml/badge.svg)](https://github.com/tomasmark79/MassCode2Md/actions/workflows/windows.yml)
+
 MassCode2Md is a lightweight tool designed to convert code snippets stored in JSON format into organized Markdown files. The tool reads a JSON file containing code snippets and automatically arranges them into directories based on the provided structure in the JSON file.
 
 Please note that the program does not include robust controls and checks, so ensure that you pass the correct arguments. The output folder must exist before generating Markdown files.
